@@ -1,0 +1,66 @@
+@import "compass/css3";
+
+.table-editable {
+  position: relative;
+
+  .glyphicon {
+    font-size: 20px;
+  }
+}
+
+.table-remove {
+  color: #700;
+  cursor: pointer;
+
+  &:hover {
+    color: #f00;
+  }
+}
+
+.table-up, .table-down {
+  color: #007;
+  cursor: pointer;
+
+  &:hover {
+    color: #00f;
+  }
+}
+
+.table-add {
+  color: #070;
+  cursor: pointer;
+  position: absolute;
+  top: 8px;
+  right: 0;
+
+  &:hover {
+    color: #0b0;
+  }
+}
+
+.wrapper {
+  width: 1100px;
+  max-width: 100%;
+  margin: auto;
+}
+
+form.multi-form {
+  padding: 20px;
+}
+form.multi-form fieldset:not(.active) {
+border-width: 1px;
+  display: none;
+}
+form.multi-form fieldset.active:first-of-type ~ .buttons .prev,
+form.multi-form fieldset.active:first-of-type ~ .buttons .submit {
+  border-width: 1px;
+  display: none;
+}
+form.multi-form fieldset.active:not(:last-of-type) ~ .buttons .submit {
+border-width: 1px;
+  display: none;
+}
+form.multi-form fieldset.active:last-of-type ~ .buttons .next {
+border-width: 1px;
+  display: none;
+}
