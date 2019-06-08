@@ -134,61 +134,29 @@ function PackageBuilder(value){
   return "package " + value + ";\n\n";
 };
 
-
 function ImportsBuilder(){
 
   var value = new Array();
-
   var impo = "import ";
   value.push(impo + "org.openqa.selenium.support.FindBy;\n");
   value.push(impo + "org.openqa.selenium.support.CacheLookup;\n");
   value.push(impo + "org.openqa.selenium.support.How;\n");
   value.push(impo + "org.openqa.selenium.WebElement;\n");
   value.push(impo + "org.openqa.selenium.WebDriver;\n");
-
-  console.log(value);
-
   return normalize(value);
 }
-
-function normalize(value) {
-
-  var aux = "";
-
-  var size = value.length;
-
-  console.log(value[1]);
-
-  console.log(size);
-
-  for(var i = 0; i < size; i++){
-    aux += value[i];
-    console.log(aux);
-  }
-
-  aux += "\n\n";
-
-  console.log(aux);
-
-  return aux;
-};
 
 function StartClassBuilder(value){
   return  "public class " + value + "Page" + " {\n\n"
 }
 
-
 function FieldsBuilder(value){
-
   var aux = "    private WebDriver driver;\n\n";
   for(var i = 0; i < value.elements.length; i++){
      aux += "    private static final String " + value.elements[i].toUpperCase() + " = \"" + value.elementIdMap[value.elements[i]] + "\";\n\n";
   }
-
-  console.log(aux);
   return aux;
 }
-
 
 function AnnotationBuilder(value){
   var aux = "";
@@ -196,70 +164,67 @@ function AnnotationBuilder(value){
     aux += "    @FindBy(how = How." + value.elementTypeMap[value.elements[i]] + ", using = \"" + value.elements[i].toUpperCase() + "\")\n" + "    @CacheLookup\n"
          + "    private WebElement " + camelize(value.elements[i]) + "WebElement" + ";\n\n" ;
   }
-
-  console.log(aux);
   return aux;
-};
-
-function camelize(str) {
-      return str.replace(/\W+(.)/g, function(match, chr)
-       {
-            return chr.toUpperCase();
-        });
 };
 
 function ConstructorBuilder(className){
 
-  var ttmm = "    public " + className + " (WebDriver driver){\n" + "        this.driver = driver;\n" + "    }\n\n";
+  var aux = "    public " + className + " (WebDriver driver){\n" + "        this.driver = driver;\n" + "    }\n\n";
 
-	return ttmm;
+	return aux;
 }
-
 
 function TextBuilder(value){
   var aux = "";
   for(var i = 0; i < value.elements.length; i++){
-
     if(value.elementTextMap[value.elements[i]] == "true"){
   	    aux += "    public String get" + titleize(value.elements[i]) + "(){\n"
   			    + "        return " + camelize(value.elements[i]) + "WebElement.getText();\n" + "    }\n\n";
     }
   }
-
-  console.log(aux);
   return aux;
 };
-
 
 function ClickBuilder(value){
   var aux = "";
   for(var i = 0; i < value.elements.length; i++){
-
     if(value.elementClickMap[value.elements[i]] == "true"){
   	    aux += "    public void click" + titleize(value.elements[i]) + "(){\n"
   			    + "        return " + camelize(value.elements[i]) + "WebElement.click();\n" + "    }\n\n";
     }
   }
-
-  console.log(aux);
   return aux;
 };
 
 function SendKeysBuilder(value){
   var aux = "";
   for(var i = 0; i < value.elements.length; i++){
-
     if(value.elementSendMap[value.elements[i]] == "true"){
   	    aux += "    public void sendKeys" + titleize(value.elements[i]) + "(String str){\n"
   			    + "        return " + camelize(value.elements[i]) + "WebElement..sendKeys(str);\n" + "    }\n\n";
     }
   }
-
-  console.log(aux);
   return aux;
 };
 
+function EndClasseBuilder(){
+  return " \n}";
+};
 
+
+
+function normalize(value) {
+
+  var aux = "";
+
+  var size = value.length;
+
+  for(var i = 0; i < size; i++){
+    aux += value[i];
+  }
+  aux += "\n\n";
+  return aux;
+};
 
 function titleize(text) {
     var words = text.toLowerCase().split(" ");
@@ -270,7 +235,9 @@ function titleize(text) {
     return words.join(" ");
 };
 
-
-function EndClasseBuilder(){
-  return " \n}";
-}
+function camelize(str) {
+      return str.replace(/\W+(.)/g, function(match, chr)
+       {
+            return chr.toUpperCase();
+        });
+};
